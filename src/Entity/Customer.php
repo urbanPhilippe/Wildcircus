@@ -21,6 +21,11 @@ class Customer
      */
     private $name;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Price", mappedBy="relation", cascade={"persist", "remove"})
+     */
+    private $price;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +39,23 @@ class Customer
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPrice(): ?Price
+    {
+        return $this->price;
+    }
+
+    public function setPrice(Price $price): self
+    {
+        $this->price = $price;
+
+        // set the owning side of the relation if necessary
+        if ($price->getRelation() !== $this) {
+            $price->setRelation($this);
+        }
 
         return $this;
     }
