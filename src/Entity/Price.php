@@ -21,6 +21,12 @@ class Price
      */
     private $amount;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Customer", inversedBy="price", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $relation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +40,18 @@ class Price
     public function setAmount(int $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getRelation(): ?Customer
+    {
+        return $this->relation;
+    }
+
+    public function setRelation(Customer $relation): self
+    {
+        $this->relation = $relation;
 
         return $this;
     }
