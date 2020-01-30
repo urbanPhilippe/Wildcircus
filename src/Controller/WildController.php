@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Performance;
+use App\Entity\Pricing;
+use App\Repository\PricingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,4 +45,14 @@ class WildController extends AbstractController
             ['performance' => $performance]
         );
     }
+    /**
+     * @Route("/pricing", name="_pricing", methods={"GET"})
+     */
+    public function showPricing(PricingRepository $pricingRepository): Response
+    {
+        return $this->render('wild/pricing.html.twig', [
+            'pricings' => $pricingRepository->findAll(),
+        ]);
+    }
+
 }

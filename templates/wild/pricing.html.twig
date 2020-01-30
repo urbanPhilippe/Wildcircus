@@ -1,0 +1,32 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Pricing index{% endblock %}
+
+{% block body %}
+    <h1>Pricing index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Per adult</th>
+            <th>Per child < 14 years</th>
+            <th>School per pupil  (Attendent Free)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for pricing in pricings %}
+            <tr>
+                <td>{{ pricing.adult }}</td>
+                <td>{{ pricing.child }}</td>
+                <td>{{ pricing.school }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
