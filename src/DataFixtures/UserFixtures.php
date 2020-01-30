@@ -19,11 +19,11 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $admin = new User();
-        $admin->setEmail('admin@monsite.com');
+        $admin->setEmail('admin@wildcircus.com');
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setPassword($this->passwordEncoder->encodePassword(
             $admin,
-            'adminpassword'
+            'wildcircus'
         ));
 
         $manager->persist($admin);
