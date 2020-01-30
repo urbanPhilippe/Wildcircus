@@ -6,23 +6,23 @@
 
     <div class="container-fluid d-flex flex-column">
         <div class="page-header">
-            <h1 class="ml-5">Les ingrédients de votre spectacle</h1>
+            <h1 class="ml-5"></h1>
             <div class="row">
-                {% for performances in performance %}
-                <div class="col-12 col-lg-4">
-                    <div class="card" style="width:400px">
-                        <img class="card-img-top" src="{{ performances.poster }}" alt="Card image">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ performances.title }}</h4>
-                            <p class="card-text">{{ performances.description }}</p>
+                {% for  performances in performance %}
+                    <div class="col-12 col-lg-4">
+                        <div class="card">
+                            <h1 class="card-header font-weight-bold text-uppercase text-center py-4 mb-0">{{ performances.title }}</h1>
+                            <div class="card-body"> {{ performances.description }}</div>
+                            <div class="card-footer" style="background-image: url({{ performances.poster }});"></div>
+
+
+
                         </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </div>
+
     </div>
-
-
 
 {% endblock %}
