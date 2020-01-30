@@ -7,6 +7,8 @@ use App\Form\ContactType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Pricing;
 use App\Entity\Contact;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use App\Repository\ContactRepository;
 use App\Repository\PricingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,7 +65,7 @@ class WildController extends AbstractController
      * @Route("/contact", name="_contact", methods={"GET","POST"})
      *
      */
-    public function showContact(Request $request,ContactRepository $contactRepository): Response
+    public function showContact(Request $request,ContactRepository $contactRepository, MailerInterface $mailer): Response
     {
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
@@ -74,6 +76,14 @@ class WildController extends AbstractController
             $entityManager->persist($contact);
             $entityManager->flush();
 
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($form->getData()->getMail())
+                ->subject('Nous avons bien reçu votre message')
+                ->html($this->renderView('wild/notification.html.twig', [
+                    'contact' => $contact,
+                ]));
+            $mailer->send($email);
             return $this->redirectToRoute('wild_contact');
         }
 
