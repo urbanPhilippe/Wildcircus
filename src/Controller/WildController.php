@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Performance;
+use App\Form\ContactType;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Pricing;
+use App\Entity\Contact;
+use App\Repository\ContactRepository;
 use App\Repository\PricingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,6 +56,30 @@ class WildController extends AbstractController
     {
         return $this->render('wild/pricing.html.twig', [
             'pricings' => $pricingRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/contact", name="_contact", methods={"GET","POST"})
+     *
+     */
+    public function showContact(Request $request,ContactRepository $contactRepository): Response
+    {
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contact);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('wild_contact');
+        }
+
+        return $this->render('wild/contact.html.twig', [
+            'contact' => $contact,
+            'form' => $form->createView(),
         ]);
     }
 
