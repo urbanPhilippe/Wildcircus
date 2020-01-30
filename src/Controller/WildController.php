@@ -3,7 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Performance;
+use App\Form\ContactType;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Pricing;
+use App\Entity\Contact;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use App\Repository\ContactRepository;
 use App\Repository\PricingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,6 +58,38 @@ class WildController extends AbstractController
     {
         return $this->render('wild/pricing.html.twig', [
             'pricings' => $pricingRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/contact", name="_contact", methods={"GET","POST"})
+     *
+     */
+    public function showContact(Request $request,ContactRepository $contactRepository, MailerInterface $mailer): Response
+    {
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contact);
+            $entityManager->flush();
+
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($form->getData()->getMail())
+                ->subject('Nous avons bien reçu votre message')
+                ->html($this->renderView('wild/notification.html.twig', [
+                    'contact' => $contact,
+                ]));
+            $mailer->send($email);
+            return $this->redirectToRoute('wild_contact');
+        }
+
+        return $this->render('wild/contact.html.twig', [
+            'contact' => $contact,
+            'form' => $form->createView(),
         ]);
     }
 
