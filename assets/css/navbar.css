@@ -1,0 +1,19 @@
+.navbar {
+    min-height: 15vh;
+}
+.logo img{
+    height: 5rem;
+}
+
+.navbar-brand{
+    font-size: 4rem;
+    font-weight: bold;
+    font-family: 'Amatic SC', cursive;
+    color: #ED5565;
+}
+
+.nav-item {
+    font-size: 1.5rem;
+}
+
+
