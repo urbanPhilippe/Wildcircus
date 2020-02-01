@@ -1,32 +1,43 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Pricing index{% endblock %}
+{% block title %}Pricing €{% endblock %}
 
 {% block body %}
-    <h1>Pricing index</h1>
+    <h2 class="title"  style="text-align: center;">Pricing</h2>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Per adult</th>
-            <th>Per child < 14 years</th>
-            <th>School per pupil  (Attendent Free)</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for pricing in pricings %}
-            <tr>
-                <td>{{ pricing.adult }}</td>
-                <td>{{ pricing.child }}</td>
-                <td>{{ pricing.school }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-10">
+                <div class="table table-responsive">
+                    <table class="table text-center mt-3">
+                        <caption>&#xB9; : under 14 years <br> &#xB2; : Free attendant per 8 kids  </caption>
+                        <thead>
+                        <tr>
+                            <th>Adult</th>
+                            <th>Child&#xB9; </th>
+                            <th>School&#xB2;</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pricing in pricings %}
+                            <tr>
+                                <td class="col-md-3">{{ pricing.adult }}€</td>
+                                <td class="col-md-3">{{ pricing.child }}€</td>
+                                <td class="col-md-3">{{ pricing.school }}€</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 {% endblock %}
