@@ -4,7 +4,7 @@
             <img src="{{ asset('build/images/balloon.png') }}" alt="logo">
         </div>
     </div>
-    <a class="navbar-brand">Wild circus</a>
+    <h1 class="navbar-brand">Wild circus</h1>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,7 +23,12 @@
                 <a class="nav-link" href="{{ path('wild_contact') }}">Contact</a>
             </li>
             {% if app.user %}
-                <a class="nav-item nav-link active" style="color: #814446;" href="{{ path('app_logout') }}"> Log out</a>
+
+            <li><a class="nav-item nav-link active" style="color: #8FFF00; font-size: 1rem;" href="{{ path('admin') }}" ><i class="fas fa-user-cog"></i> Admin</a></li>
+            <li><a class="nav-item nav-link active" style="color: #8FFF00; font-size: 1rem;" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+
+
+
             {% endif %}
         </ul>
     </div>

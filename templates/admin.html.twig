@@ -5,26 +5,26 @@
 {% block body %}
     <div class="container admin mb-5">
         <div class="page-header">
-            <h1 class="ml-5">Gestion</h1>
+           <h2 style="text-align: center">Gestion</h2>
         </div>
         <div class="row">
             <div class="col-12 col-lg-4">
-                <a href="{{ path('contact_index') }}">
+                <a class="card-link" style="color: #593A42; font-size: large; font-weight: bold;"  href="{{ path('contact_index') }}">
                     <div class="card">
                         <div class="card-header text-center py-4 mb-0">
-                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-envelope fa-3x" style="color:#593A42" ></i>
                         </div>
-                        <div class="card-body text-center">
+                        <div class="card-body text-center ">
                             Messaging
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-12 col-lg-4">
-                <a href="{{ path('performance_index') }}">
+                <a class="card-link" style="color: #593A42; font-size: large; font-weight: bold;" href="{{ path('performance_index') }}">
                     <div class="card">
                         <div class="card-header text-center py-4 mb-0">
-                            <i class="fas fa-theater-masks"></i>
+                            <i class="fas fa-theater-masks fa-3x" style="color:#593A42"></i>
                         </div>
                         <div class="card-body text-center">
                             Performances
@@ -33,10 +33,10 @@
                 </a>
             </div>
             <div class="col-12 col-lg-4">
-                <a href="{{ path('pricing_index') }}">
+                <a class="card-link" style="color: #593A42; font-size: large; font-weight: bold;" href="{{ path('pricing_index') }}">
                     <div class="card">
                         <div class="card-header text-center py-4 mb-0">
-                            <i class="fas fa-money-bill-alt"></i>
+                            <i class="fas fa-money-bill-alt fa-3x" style="color:#593A42"></i>
                         </div>
                         <div class="card-body text-center">
                             Pricing

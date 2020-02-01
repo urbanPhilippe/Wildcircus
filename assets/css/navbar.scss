@@ -1,6 +1,7 @@
 .navbar {
     min-height: 15vh;
 }
+
 .logo img{
     height: 5rem;
 }
@@ -12,8 +13,11 @@
     color: #ED5565;
 }
 
+.nav-link:hover{
+    color: deeppink !important;
+}
+
 .nav-item {
     font-size: 1.5rem;
 }
-
 

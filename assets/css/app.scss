@@ -1,22 +1,57 @@
 @import "~bootstrap/scss/bootstrap" ;
+@import "navbar";
 @import "header";
 @import "main";
 @import "font";
-@import "navbar";
 @import "performance";
+@import "contact";
 
 
 body {
     background-color: white;
+    margin: 45px;
 }
 
 h1{
     font-family: 'Amatic SC', cursive;
     font-size : 3rem;
     font-weight: bold;
+    text-align: center;
+}
 
+h2{
+    font-family: 'Amatic SC', cursive;
+    font-size : 2rem;
+    font-weight: bold;
 }
 
 p {
     font-size : 1.5rem;
+}
+
+
+@media screen and (max-width: 390px) {
+
+    body {
+       margin: 10px 10px 25px 10px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        text-align: center;
+    }
+    h2 {
+        font-size: 1.5rem;
+
+    }
+
+    h1.navbar-brand {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+    p {
+        font-size : 1rem;
+        margin-top: 1rem;
+    }
+
 }
