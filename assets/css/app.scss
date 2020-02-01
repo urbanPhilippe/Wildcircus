@@ -9,12 +9,14 @@
 
 body {
     background-color: white;
+    margin: 45px;
 }
 
 h1{
     font-family: 'Amatic SC', cursive;
     font-size : 3rem;
     font-weight: bold;
+    text-align: center;
 }
 
 h2{
@@ -29,6 +31,10 @@ p {
 
 
 @media screen and (max-width: 390px) {
+
+    body {
+       margin: 10px 10px 25px 10px;
+    }
 
     h1 {
         font-size: 2rem;

@@ -23,7 +23,12 @@
                 <a class="nav-link" href="{{ path('wild_contact') }}">Contact</a>
             </li>
             {% if app.user %}
-                <a class="nav-item nav-link active" style="color: deeppink;" href="{{ path('app_logout') }}"> Log out</a>
+
+            <li><a class="nav-item nav-link active" style="color: #8FFF00; font-size: 1rem;" href="{{ path('admin') }}" ><i class="fas fa-user-cog"></i> Admin</a></li>
+            <li><a class="nav-item nav-link active" style="color: #8FFF00; font-size: 1rem;" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+
+
+
             {% endif %}
         </ul>
     </div>
