@@ -4,9 +4,17 @@
 
 
 {% block body %}
-    <h1></h1>
 
-   <div class=""
-    {{ include('./contact/_form.html.twig') }}
+        <div class="contactus">
+            <h1>Contact-us</h1>
+            {{ include('./contact/_form.html.twig') }}
+        </div>
+        <div class="map">
+            <h1>target location</h1>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2829.030187555451!2d-0.5631052489496519!3d44.84131857899596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5527cba74d1bdf%3A0xb92bcdcad0920688!2sWild%20Code%20School%2C%20Formation%20d%C3%A9veloppeur%20web%20%26%20data%20analyst!5e0!3m2!1sfr!2sfr!4v1580566847048!5m2!1sfr!2sfr"  allowfullscreen=""></iframe>
+
+            </div>
+        </div>
 
 {% endblock %}
