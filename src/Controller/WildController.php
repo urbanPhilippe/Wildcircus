@@ -68,13 +68,19 @@ class WildController extends AbstractController
     public function showContact(Request $request,ContactRepository $contactRepository, MailerInterface $mailer): Response
     {
         $contact = new Contact();
-        $form = $this->createForm(ContactType::class, $contact);
+        $form = $this->createForm(ContactType::class, $contact, ['answer_disabled' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($contact);
             $entityManager->flush();
+
+            $this->addFlash(
+                'primary',
+                'Votre message a bien été envoyé'
+            );
+
 
             $email = (new Email())
                 ->from($this->getParameter('mailer_from'))
