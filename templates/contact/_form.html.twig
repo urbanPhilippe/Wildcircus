@@ -1,11 +1,7 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ form_start(form) }}
-     {{ form_widget(form.answer, { 'attr': {'class': 'hidden-row'} }) }}
-
-     {% if is_granted('ROLE_ADMIN') %}
-     {{ form_widget(form.answer, { 'attr': {'class': 'display-row'} }) }}
-     {% endif %}
-
-
+    {{ form_widget(form) }}
 <button class="btn btn-outline-dark mb-3 ml-3">{{ button_label|default('Send') }}</button>
 {{ form_end(form) }}
+
+
