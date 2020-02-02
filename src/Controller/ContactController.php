@@ -8,6 +8,8 @@ use App\Repository\ContactRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -60,18 +62,26 @@ class ContactController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="contact_edit", methods={"GET","POST"})
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function edit(Request $request, Contact $contact): Response
+    public function edit(Request $request, Contact $contact, MailerInterface $mailer): Response
     {
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getAnswer()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $email = (new Email())
+                ->from($this ->getParameter('mailer_from'))
+                ->to($form->getData()->getMail())
+                ->subject('Vous avez reçu un message de la Wild touch')
+                ->html($this->renderView('contact/answer.html.twig', [
+                    'contact' => $contact,
+                ]));
+            $mailer->send($email);
             return $this->redirectToRoute('contact_index');
-        }
-
+        }}
         return $this->render('contact/edit.html.twig', [
             'contact' => $contact,
             'form' => $form->createView(),
@@ -91,4 +101,5 @@ class ContactController extends AbstractController
 
         return $this->redirectToRoute('contact_index');
     }
+
 }
