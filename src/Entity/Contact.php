@@ -41,6 +41,11 @@ class Contact
      */
     private $created_at;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $answer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,18 @@ class Contact
     public function setCreatedAt(?\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getAnswer(): ?string
+    {
+        return $this->answer;
+    }
+
+    public function setAnswer(?string $answer): self
+    {
+        $this->answer = $answer;
 
         return $this;
     }
