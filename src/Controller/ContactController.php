@@ -80,6 +80,12 @@ class ContactController extends AbstractController
                     'contact' => $contact,
                 ]));
             $mailer->send($email);
+
+                $this->addFlash(
+                    'success',
+                    'Réponse envoyée'
+                );
+
             return $this->redirectToRoute('contact_index');
         }}
         return $this->render('contact/edit.html.twig', [
@@ -97,7 +103,12 @@ class ContactController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($contact);
             $entityManager->flush();
-        }
+
+            $this->addFlash(
+                'success',
+                'Contact deleted'
+            );
+                    }
 
         return $this->redirectToRoute('contact_index');
     }

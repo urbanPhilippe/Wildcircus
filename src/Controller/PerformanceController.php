@@ -39,6 +39,11 @@ class PerformanceController extends AbstractController
             $entityManager->persist($performance);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Performance added'
+            );
+
             return $this->redirectToRoute('performance_index');
         }
 
@@ -69,6 +74,11 @@ class PerformanceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash(
+                'success',
+                'Performance updated'
+            );
+
             return $this->redirectToRoute('performance_index');
         }
 
@@ -87,6 +97,11 @@ class PerformanceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($performance);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Performance deleted'
+            );
         }
 
         return $this->redirectToRoute('performance_index');

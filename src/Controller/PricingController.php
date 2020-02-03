@@ -39,6 +39,11 @@ class PricingController extends AbstractController
             $entityManager->persist($pricing);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Pricing added'
+            );
+
             return $this->redirectToRoute('pricing_index');
         }
 
@@ -69,6 +74,11 @@ class PricingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash(
+                'success',
+                'Pricing updated'
+            );
+
             return $this->redirectToRoute('pricing_index');
         }
 
@@ -87,6 +97,11 @@ class PricingController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($pricing);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Pricing deleted'
+            );
         }
 
         return $this->redirectToRoute('pricing_index');
