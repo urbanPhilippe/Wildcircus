@@ -20,11 +20,29 @@ class ContactController extends AbstractController
     /**
      * @Route("/", name="contact_index", methods={"GET"})
      */
-    public function index(ContactRepository $contactRepository): Response
+    public function index(Request $request, ContactRepository $contactRepository): Response
     {
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getAnswer()) {
+                $this->getDoctrine()->getManager()->flush();
+
+
+                $this->addFlash(
+                    'success',
+                    'Réponse envoyée'
+                );
+
+            }
+        }
         return $this->render('contact/index.html.twig', [
             'contacts' => $contactRepository->findAll(),
+            'form' => $form->createView()
         ]);
+
     }
 
     /**
@@ -71,23 +89,24 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->getData()->getAnswer()) {
-            $this->getDoctrine()->getManager()->flush();
-            $email = (new Email())
-                ->from($this ->getParameter('mailer_from'))
-                ->to($form->getData()->getMail())
-                ->subject('Vous avez reçu un message de la Wild touch')
-                ->html($this->renderView('contact/answer.html.twig', [
-                    'contact' => $contact,
-                ]));
-            $mailer->send($email);
+                $this->getDoctrine()->getManager()->flush();
+                $email = (new Email())
+                    ->from($this->getParameter('mailer_from'))
+                    ->to($form->getData()->getMail())
+                    ->subject('Vous avez reçu un message de la Wild touch')
+                    ->html($this->renderView('contact/answer.html.twig', [
+                        'contact' => $contact,
+                    ]));
+                $mailer->send($email);
 
                 $this->addFlash(
                     'success',
                     'Réponse envoyée'
                 );
 
-            return $this->redirectToRoute('contact_index');
-        }}
+                return $this->redirectToRoute('contact_index');
+            }
+        }
         return $this->render('contact/edit.html.twig', [
             'contact' => $contact,
             'form' => $form->createView(),
@@ -99,7 +118,7 @@ class ContactController extends AbstractController
      */
     public function delete(Request $request, Contact $contact): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $contact->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($contact);
             $entityManager->flush();
@@ -108,7 +127,7 @@ class ContactController extends AbstractController
                 'success',
                 'Contact deleted'
             );
-                    }
+        }
 
         return $this->redirectToRoute('contact_index');
     }
