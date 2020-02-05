@@ -11,9 +11,8 @@
             <div class="modal-body">
                 <form action="/contact/{{ contact.id }}/edit" method="post">
                     <input type="hidden" name="id" value="{{ contact.id }}">
-                    <textarea name="answer"></textarea>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <textarea style="min-width: 100%;" name="answer"></textarea>
+                    <p><button type="submit" class="btn btn-outline-dark mb-3 ml-3">Send</button></p>
                 </form>
             </div>
         </div>

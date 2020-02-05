@@ -13,6 +13,7 @@
                 <th>Lastname</th>
                 <th>Firstname</th>
                 <th>Message</th>
+                <th>Answer</th>
                 <th>Created_at</th>
                 <th>actions</th>
             </tr>
@@ -27,10 +28,16 @@
                 <td>{{ contact.message }}</td>
                 <td>{{ contact.answer }}</td>
                 <td>{{ contact.createdAt ? contact.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="" data-toggle="modal" data-target="#modal-answer{{ contact.id }}">answer</a>
-                    <a href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a>
+                <td class="text-center">
+                    <button style="border:none; background-color: white;" href="" data-toggle="modal" data-target="#modal-answer{{ contact.id }}"><i class="fas fa-comment-dots"></i></button>
+                    <form method="post" action="{{ path('contact_delete', {'id': contact.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+                        <button style="border:none; background-color: white;"><i class="fas fa-trash-alt"></i></button>
+
+                    </form>
                     {% include 'contact/modal.html.twig' %}
+
                 </td>
             </tr>
         {% else %}
@@ -40,7 +47,5 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <button class="btn btn-outline-dark mb-3 ml-3"><a href="{{ path('contact_new') }}">Create new</a></button>
     <button class="btn btn-outline-dark mb-3 ml-3"><a href="{{ path('admin') }}">back</a></button>
 {% endblock %}
