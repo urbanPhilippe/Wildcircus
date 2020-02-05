@@ -25,9 +25,12 @@
                 <td>{{ contact.lastname }}</td>
                 <td>{{ contact.firstname }}</td>
                 <td>{{ contact.message }}</td>
+                <td>{{ contact.answer }}</td>
                 <td>{{ contact.createdAt ? contact.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
+                    <a href="" data-toggle="modal" data-target="#modal-answer{{ contact.id }}">answer</a>
                     <a href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a>
+                    {% include 'contact/modal.html.twig' %}
                 </td>
             </tr>
         {% else %}

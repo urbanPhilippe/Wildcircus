@@ -22,25 +22,8 @@ class ContactController extends AbstractController
      */
     public function index(Request $request, ContactRepository $contactRepository): Response
     {
-        $contact = new Contact();
-        $form = $this->createForm(ContactType::class, $contact);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getAnswer()) {
-                $this->getDoctrine()->getManager()->flush();
-
-
-                $this->addFlash(
-                    'success',
-                    'Réponse envoyée'
-                );
-
-            }
-        }
         return $this->render('contact/index.html.twig', [
             'contacts' => $contactRepository->findAll(),
-            'form' => $form->createView()
         ]);
 
     }
@@ -80,7 +63,10 @@ class ContactController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="contact_edit", methods={"GET","POST"})
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @param Request $request
+     * @param Contact $contact
+     * @param MailerInterface $mailer
+     * @return Response
      */
     public function edit(Request $request, Contact $contact, MailerInterface $mailer): Response
     {
@@ -107,6 +93,30 @@ class ContactController extends AbstractController
                 return $this->redirectToRoute('contact_index');
             }
         }
+
+        if ($request->isMethod('POST')) {
+            $contact->setAnswer($request->request->get('answer'));
+            $this->getDoctrine()->getManager()->persist($contact);
+            $this->getDoctrine()->getManager()->flush();
+
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($contact->getMail())
+                ->subject('Vous avez reçu un message de la Wild touch')
+                ->html($this->renderView('contact/answer.html.twig', [
+                    'contact' => $contact,
+                ]));
+            $mailer->send($email);
+
+            $this->addFlash(
+                'success',
+                'Réponse envoyée'
+            );
+
+            return $this->redirectToRoute('contact_index');
+        }
+
+
         return $this->render('contact/edit.html.twig', [
             'contact' => $contact,
             'form' => $form->createView(),
